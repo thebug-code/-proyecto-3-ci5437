@@ -23,13 +23,8 @@ class TraductorCNF:
 
         return matches
 
-    def cnf_clause(self):
-        clauses = []
-        matches = self.match_generator()
-
-        print(matches)
-
-        # restricción 1: no se pueden jugar dos partidos al mismo tiempo
+    # restrictión 1: no se pueden jugar dos partidos al mismo tiempo
+    def one_match(self, matches, clauses):
         for date in self.dates:
             for hour in self.hours:
                 # Se obtienen los partidos que se juegan en la misma fecha y hora
@@ -44,7 +39,10 @@ class TraductorCNF:
                         clause = [-matches[partido1], -matches[partido2]]
                         clauses.append(clause)
 
-        # restricción 2: un equipo no puede jugar dos partidos el mismo día
+        return clauses
+
+    # restricción 2: un equipo no puede jugar dos partidos el mismo día
+    def one_team_one_day(self, matches, clauses):
         for date in self.dates:
             for team in self.teams:
                 # Se obtienen los partidos de un equipo en la misma fecha
@@ -62,7 +60,10 @@ class TraductorCNF:
                                                ], -matches[matches_date_team[j]]]
                             clauses.append(clause)
 
-        # restricción 3: un equipo no puede jugar como local dias consecutivos o como visitante dias consecutivos
+        return clauses
+
+    # restricción 3: un equipo no puede jugar como local dias consecutivos o como visitante dias consecutivos
+    def one_team_consecutive_days(self, matches, clauses):
         for team in self.teams:
             for i in range(len(self.dates)-1):
                 actual_date = self.dates[i]
@@ -103,6 +104,23 @@ class TraductorCNF:
                         clauses.append(clause)
 
         return clauses
+
+    def cnf_clause(self):
+        clauses = []
+        matches = self.match_generator()
+
+        print(matches)
+
+        # restricción 1: no se pueden jugar dos partidos al mismo tiempo
+        clauses = self.one_match(matches, clauses)
+
+        # restricción 2: un equipo no puede jugar dos partidos el mismo día
+        clauses = self.one_team_one_day(matches, clauses)
+
+        # restricción 3: un equipo no puede jugar como local dias consecutivos o como visitante dias consecutivos
+        clauses = self.one_team_consecutive_days(matches, clauses)
+
+        # restricción 4: un equipo juega exactamente una vez como local y una vez como visitante con cada equipo
 
 
 # prueba
