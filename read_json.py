@@ -42,16 +42,17 @@ def get_hours(data):
         start_hour = start_hour.replace(
             minute=0, second=0) + timedelta(hours=1)
 
+    total_hours = end_hour.hour - start_hour.hour
+    count = 2
+
     # Se genera el rango de horas
     range_hours = []
     actual_hour = start_hour
-    while actual_hour.time() <= end_hour:
+    while count < total_hours:
         range_hours.append(actual_hour.strftime('%H:%M:%S'))
         actual_hour += timedelta(hours=2)
 
-        # Verificar si la hora actual más dos horas excede la hora de fin
-        if actual_hour.time() < datetime.strptime('01:59:59', '%H:%M:%S').time():
-            break
+        count += 2
 
     return range_hours
 
