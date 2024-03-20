@@ -105,11 +105,47 @@ class TraductorCNF:
 
         return clauses
 
+    # restricción 4: un equipo juega exactamente una vez como local y una vez como visitante con cada equipo
+    def one_team_one_opponent(self, matches, clauses):
+        for i in range(len(self.teams)):
+            for j in range(i+1, len(self.teams)):
+                team = self.teams[i]
+                opponent = self.teams[j]
+
+                # Se obtienen los partidos del team contra el opponent como local
+                matches_local = [matches[(team, opponent, date, hour)]
+                                 for date in self.dates
+                                 for hour in self.hours]
+
+                # Se obtienen los partidos del team contra el opponent como visitante
+                matches_visitor = [matches[(opponent, team, date, hour)]
+                                   for date in self.dates
+                                   for hour in self.hours]
+
+                # Se crea la cláusula que impide que el team juegue más de una vez como local contra el opponent
+                clauses += self.only_one(matches_local)
+
+                # Se crea la cláusula que impide que el team juegue más de una vez como visitante contra el opponent
+                clauses += self.only_one(matches_visitor)
+
+        return clauses
+
+    def only_one(self, match_number):
+        clauses = []
+
+        # Al menos un partido ocurre
+        clauses.append([match for match in match_number])
+
+        # A lo sumo un partido ocurre
+        for i in range(len(match_number)):
+            for j in range(i+1, len(match_number)):
+                clauses.append([-match_number[i], -match_number[j]])
+
+        return clauses
+
     def cnf_clause(self):
         clauses = []
         matches = self.match_generator()
-
-        print(matches)
 
         # restricción 1: no se pueden jugar dos partidos al mismo tiempo
         clauses = self.one_match(matches, clauses)
@@ -121,11 +157,16 @@ class TraductorCNF:
         clauses = self.one_team_consecutive_days(matches, clauses)
 
         # restricción 4: un equipo juega exactamente una vez como local y una vez como visitante con cada equipo
+        clauses = self.one_team_one_opponent(matches, clauses)
+
+        return clauses
 
 
 # prueba
 file = 'ejemplo1.json'
 data = rj.read_json_file(file)
 traductor = TraductorCNF(data)
-cnf = traductor.cnf_clause()
+matches = traductor.match_generator()
+print(matches)
+cnf = traductor.one_team_one_opponent(matches, [])
 print(cnf)
