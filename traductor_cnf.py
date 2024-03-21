@@ -161,6 +161,13 @@ class TraductorCNF:
 
         return clauses
 
+    # crea el archivo en formato dimacs cnf
+    def dismacs(self, var_count, clauses, file_name):
+        with open(file_name, 'w') as file:
+            file.write('p cnf {} {}\n'.format(var_count, len(clauses)))
+            for clause in clauses:
+                file.write(' '.join(map(str, clause)) + ' 0\n')
+
 
 # prueba
 file = 'ejemplo1.json'
@@ -169,4 +176,6 @@ traductor = TraductorCNF(data)
 matches = traductor.match_generator()
 print(matches)
 cnf = traductor.one_team_one_opponent(matches, [])
-print(cnf)
+nombre = rj.get_tournament_name(data)
+print(nombre)
+traductor.dismacs(len(matches), cnf, nombre)
