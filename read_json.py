@@ -48,12 +48,11 @@ def get_hours(data):
     # Se genera el rango de horas
     range_hours = []
     actual_hour = start_hour
-    while count < total_hours:
+    while count <= total_hours:
         range_hours.append(actual_hour.strftime('%H:%M:%S'))
         actual_hour += timedelta(hours=2)
 
         count += 2
-
     return range_hours
 
 
