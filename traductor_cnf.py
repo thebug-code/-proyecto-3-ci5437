@@ -1,4 +1,6 @@
 import read_json as rj
+import utils
+from icalendar import Calendar, Event
 
 
 class TraductorCNF:
@@ -167,6 +169,34 @@ class TraductorCNF:
             file.write('p cnf {} {}\n'.format(var_count, len(clauses)))
             for clause in clauses:
                 file.write(' '.join(map(str, clause)) + ' 0\n')
+
+    # crea el archivo .ics
+    def ical(self, solution):
+        cal = Calendar()
+        cal.add('prodid', '-//My calendar product//example.com//')
+        cal.add('version', '2.0')
+        cal.add('name', rj.get_tournament_name(self.data))
+
+        for sol in solution.split():
+            if int(sol) > 0:
+                var = get_keys_by_value(match_generator(), int(sol))
+
+                j1 = get_keys_by_value(self.teams, var[0])[0]
+                j2 = get_keys_by_value(self.teams, var[1])[0]
+                d = get_keys_by_value(self.dates, var[2])[0]
+                hi = get_keys_by_value(self.hours, var[3])[0]
+                hf = get_keys_by_value(self.hours, var[3])[0] + timedelta(hours=2)
+
+                event = Event()
+                event.add('summary', f"{j1} vs {j2}")
+                event.add('dtstart', datetime.strptime(f"{d} {hi}", '%Y-%m-%d %H:%M:%S'))
+                event.add('dtend', datetime.strptime(f"{d} {hf}", '%Y-%m-%d %H:%M:%S'))
+                cal.add_component(event)
+
+        # write .ics file
+        f = open(f"{rj.get_tournament_name(self.data)}.ics", "wb")
+        f.write(cal.to_ical())
+        f.close()
 
 
 # prueba
