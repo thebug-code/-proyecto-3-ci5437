@@ -44,11 +44,11 @@ Cada restricción se modela de la siguiente forma:
     $(\forall d,h | M_{l,v,d,h})$ donde el equipo l juega como local contra el equipo v. Esto cláusula asegura que se juegue al  
     menos una vez.
 
-    $(\neg M_{v,l,d',h'} \lor \neg M_{v,l,d',h'})$ con $(d, h) != (d', h') $ Esta cláusula asegura que se jueguen exactamente una vez.
+    $(\neg M_{l,v,d',h'} \lor \neg M_{l,v,d',h'})$ con $(d, h) != (d', h') $ Esta cláusula asegura que se jueguen exactamente una vez.
 
   - Todos los participantes juegan como "visitantes" una vez contra los otros participantes.
  
-    $(\forall d,h | M_{l,v,d,h})$ donde el equipo l juega como visitante contra el equipo v. Esto cláusula asegura que se juegue al  
+    $(\forall d,h | M_{v,l,d,h})$ donde el equipo l juega como visitante contra el equipo v. Esto cláusula asegura que se juegue al  
     menos una vez.
 
     $(\neg M_{v,l,d',h'} \lor \neg M_{v,l,d',h'})$ con $(d, h) != (d', h') $ Esta cláusula asegura que se jueguen exactamente una vez.
