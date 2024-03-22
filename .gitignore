@@ -2,3 +2,5 @@
 *.dimacs
 env
 __pycache__
+*.ics
+glucose-sol.txt
