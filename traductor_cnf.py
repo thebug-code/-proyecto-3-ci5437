@@ -1,6 +1,7 @@
 import read_json as rj
-import utils
+from utils import get_keys_by_value
 from icalendar import Calendar, Event
+from datetime import datetime, timedelta
 
 
 class TraductorCNF:
@@ -165,7 +166,7 @@ class TraductorCNF:
 
     # crea el archivo en formato dimacs cnf
     def dismacs(self, var_count, clauses, file_name):
-        with open(file_name, 'w') as file:
+        with open('{}.dimacs'.format(file_name), 'w') as file:
             file.write('p cnf {} {}\n'.format(var_count, len(clauses)))
             for clause in clauses:
                 file.write(' '.join(map(str, clause)) + ' 0\n')
@@ -179,13 +180,13 @@ class TraductorCNF:
 
         for sol in solution.split():
             if int(sol) > 0:
-                var = get_keys_by_value(match_generator(), int(sol))
+                var = get_keys_by_value(self.match_generator(), int(sol))
 
-                j1 = get_keys_by_value(self.teams, var[0])[0]
-                j2 = get_keys_by_value(self.teams, var[1])[0]
-                d = get_keys_by_value(self.dates, var[2])[0]
-                hi = get_keys_by_value(self.hours, var[3])[0]
-                hf = get_keys_by_value(self.hours, var[3])[0] + timedelta(hours=2)
+                j1 = var[0][0]
+                j2 = var[0][1]
+                d = var[0][2]
+                hi = var[0][3]
+                hf = (datetime.strptime(f'{d} {hi}', '%Y-%m-%d %H:%M:%S') + timedelta(hours=2)).time()
 
                 event = Event()
                 event.add('summary', f"{j1} vs {j2}")
@@ -197,15 +198,3 @@ class TraductorCNF:
         f = open(f"{rj.get_tournament_name(self.data)}.ics", "wb")
         f.write(cal.to_ical())
         f.close()
-
-
-# prueba
-file = 'ejemplo1.json'
-data = rj.read_json_file(file)
-traductor = TraductorCNF(data)
-matches = traductor.match_generator()
-print(matches)
-cnf = traductor.one_team_one_opponent(matches, [])
-nombre = rj.get_tournament_name(data)
-print(nombre)
-traductor.dismacs(len(matches), cnf, nombre)
