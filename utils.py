@@ -1,3 +1,4 @@
+from os import path
 import subprocess
 import sys
 
@@ -5,6 +6,8 @@ import sys
 def get_keys_by_value(dictionary, value_to_find):
     return [key for key, value in dictionary.items() if value == value_to_find]
 
+def is_json_file(filename):
+    return path.splitext(filename)[1].lower() == ".json"
 
 def run_glucose(cnf_file_path, traductor):
     # Comando para ejecutar glucose con el archivo CNF en formato Dimacs
