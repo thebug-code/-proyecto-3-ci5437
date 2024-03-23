@@ -35,9 +35,9 @@ Para este proyecto, necesitará tener instalado Python y C++. Puede descargar Py
 
 Además, necesitará tener pip, el administrador de paquetes para Python, instalado. Puede aprender más sobre pip [aquí](https://pip.pypa.io/en/stable/).
 
-## Instalación :coffee:
+## Uso :coffee:
 
-Para poner en marcha el proyecto, siga estos pasos:
+Para poner ejecutar el proyecto, siga estos pasos:
 
 1. Comience clonando el repositorio en su máquina local y navegando a él:
 
@@ -89,3 +89,6 @@ Donde:
 * Las fechas y horas en formato ISO 8601 se deben especificar sin zona horaria. Se asume que la zona horaria es UTC.
 * Las horas de inicio y la finalización no deben incluir milisegundo.
 * La lista de participantes puede contener cualquier cantidad de equipos.
+
+---
+Hecho por [Oliver](https://github.com/oliebueno) y [A](https://github.com/thebug-code)
