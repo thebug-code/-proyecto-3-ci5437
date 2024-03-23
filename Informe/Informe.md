@@ -65,7 +65,7 @@ Para la implementación de la solución se uso python como lenguaje y Glucose co
 - main: contiene el cliente principal para la ejecuación de las tareas del programa.
 
 ## Pruebas y resultados
-Se realizarón 10 pruebas, las cuales fueron aumentando de dificultad progresivamnete, a continuación se muestra una tabla con los valores usados y los resultados.
+Se realizarón un total 10 pruebas, las cuales fueron aumentando de dificultad progresivamnete, siendo proporcional con el número de equipos, el número de horas, y el número de días a continuación se muestra una tabla con los valores usados y los resultados.
 
 | Nº Equipos | Horas | Días | Variables  | Clausulas     | Tiempo (s) |
 |------------|-------|------|------------|---------------|------------|
@@ -79,3 +79,16 @@ Se realizarón 10 pruebas, las cuales fueron aumentando de dificultad progresiva
 | 8          | 8     | 76   | 12768      | 2853032       | 4.806860   |
 | 10         | 8     | 76   | 20520      | 5423310       | 4.115944   |
 | 14         | 10    | 76   | 69160      | 37159122      | 29.88765   |
+
+Las pruebas se realizarón en un equipocon la siguientes especificaciones:
+- Procesador: i5 12600k, 3,7 GHZ, 16 hilos.
+- Memoria Ram: 16 GB, Ddr5 4800 MHz.
+
+## Conclusiones
+Dados los resultados anterirores, se observa que al modificar los sub-índices de la variable, cambia la complegidad del problema, lo que ocasiona multiples resultados.
+
+Al aumentar alguno de los valores de los sub-índice el problema aumenta, esto se ve reflejado en la cantidad de variables que se genera, y esto concuerda, ya que los dominios para efectuar producto cruz para obtener la variables para el SAT-solver aumenta. Por otro lado al aumentar el número de variables, tambien aumenta el número de clausulas del cnf.
+
+Además se observan que los tiempos van en aumento y esto se produce a que cada proceso (generar las variables, generar las clausulas, resolver el cnf) aumenta de complegidad ya que tienen un mayor dominio que abarcar.
+
+El problema hasta las pruebas que fueron abordas resulto eficiente, pero se puede notar que al aumentar un poco las variables, el programa aumenta significativamente el tiempo para resolverlo, lo cual deja como conclusión que para un número elevado de equipos en un torneo de larga duración, resolver rl problema usando CNF-SAT puede resultar ineficiente.
