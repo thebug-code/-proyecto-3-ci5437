@@ -1,4 +1,4 @@
-# README
+# Planificador de torneos deportivos con SAT: de JSON a iCalendar
 
 ## **Descripción del proyecto**
 
