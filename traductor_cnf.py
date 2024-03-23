@@ -40,7 +40,7 @@ class TraductorCNF:
 
                 # Se crea la cláusula
                 for i, partido1 in enumerate(matches_date_hour):
-                    for partido2 in matches_date_hour[i + 1 :]:
+                    for partido2 in matches_date_hour[i + 1:]:
                         clause = [-matches[partido1], -matches[partido2]]
                         clauses.append(clause)
 
@@ -196,10 +196,10 @@ class TraductorCNF:
         cal.add("version", "2.0")
         cal.add("name", rj.get_tournament_name(self.data))
 
-        maches = self.match_generator()
+        matches = self.match_generator()
         for sol in solution.split():
             if int(sol) > 0:
-                var = get_keys_by_value(maches, int(sol))
+                var = get_keys_by_value(matches, int(sol))
 
                 j1 = var[0][0]
                 j2 = var[0][1]
@@ -210,15 +210,23 @@ class TraductorCNF:
                     + timedelta(hours=2)
                 ).time()
 
+                # Formatear la fecha y hora para mayor legibilidad
+                start_time = datetime.strptime(
+                    f"{d} {hi}", "%Y-%m-%d %H:%M:%S")
+                end_time = datetime.strptime(f"{d} {hf}", "%Y-%m-%d %H:%M:%S")
+                formatted_start = start_time.strftime(
+                    "%d de %B de %Y a las %H:%M")
+                formatted_end = end_time.strftime("%d de %B de %Y a las %H:%M")
+
                 event = Event()
                 event.add("summary", f"{j1} vs {j2}")
-                event.add(
-                    "dtstart", datetime.strptime(f"{d} {hi}", "%Y-%m-%d %H:%M:%S")
-                )
-                event.add("dtend", datetime.strptime(f"{d} {hf}", "%Y-%m-%d %H:%M:%S"))
+                event.add("description",
+                          f"Inicio: {formatted_start}, Fin: {formatted_end}")
+                event.add("dtstart", start_time)
+                event.add("dtend", end_time)
                 cal.add_component(event)
 
-        # write .ics file
-        f = open(f"{rj.get_tournament_name(self.data).lower()}.ics", "wb")
-        f.write(cal.to_ical())
-        f.close()
+        # Escribir el archivo .ics
+        file_name = f"{rj.get_tournament_name(self.data).lower()}.ics"
+        with open(file_name, "wb") as f:
+            f.write(cal.to_ical())
