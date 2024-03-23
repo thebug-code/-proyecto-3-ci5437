@@ -196,9 +196,10 @@ class TraductorCNF:
         cal.add("version", "2.0")
         cal.add("name", rj.get_tournament_name(self.data))
 
+        maches = self.match_generator()
         for sol in solution.split():
             if int(sol) > 0:
-                var = get_keys_by_value(self.match_generator(), int(sol))
+                var = get_keys_by_value(maches, int(sol))
 
                 j1 = var[0][0]
                 j2 = var[0][1]
@@ -218,6 +219,6 @@ class TraductorCNF:
                 cal.add_component(event)
 
         # write .ics file
-        f = open(f"{rj.get_tournament_name(self.data)}.ics", "wb")
+        f = open(f"{rj.get_tournament_name(self.data).lower()}.ics", "wb")
         f.write(cal.to_ical())
         f.close()

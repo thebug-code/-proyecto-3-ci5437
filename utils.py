@@ -32,7 +32,7 @@ def run_glucose(cnf_file_path, traductor):
         exit()
     else:
         traductor.ical(solution)
-        print(f"{cnf_file_path}.isc fue creado exitosamente")
+        print(f"{cnf_file_path.split('.')[0]}.isc fue creado exitosamente")
 
         # Obtiene el numero de clausulas y variables creadas
         with open(cnf_file_path, "r") as file:

@@ -30,10 +30,10 @@ def main(json_file_path):
     tournament_name = rj.get_tournament_name(data)
 
     # 'Traduce' la expresion al formato DIMACS CNF
-    traductor.dismacs(len(matches), clauses, tournament_name)
+    traductor.dismacs(len(matches), clauses, tournament_name.lower())
 
     # Ejecuta el sat solver glucose
-    cnf_file_path = tournament_name + ".dimacs"
+    cnf_file_path = tournament_name.lower() + ".dimacs"
     util.run_glucose(cnf_file_path, traductor)
 
     # Registrar el tiempo de finalización
