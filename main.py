@@ -33,7 +33,7 @@ def main(json_file_path):
     traductor.dismacs(len(matches), clauses, tournament_name)
 
     # Ejecuta el sat solver glucose
-    cnf_file_path = json_file_path.split(".")[0] + ".dimacs"
+    cnf_file_path = tournament_name + ".dimacs"
     util.run_glucose(cnf_file_path, traductor)
 
     # Registrar el tiempo de finalización
