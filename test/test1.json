@@ -1,0 +1,14 @@
+{
+    "tournament_name": "La_Liga",
+    "start_date": "2024-03-20",
+    "end_date": "2024-03-26",
+    "start_time": "08:00:00",
+    "end_time": "12:00:00",
+    "participants": [
+        "Real_Madrid",
+        "Barcelona",
+        "Sevilla",
+        "Villarreal"
+    ]
+}
+

@@ -1,4 +1,3 @@
-*.json
 *.dimacs
 env
 __pycache__
