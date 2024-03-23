@@ -63,3 +63,19 @@ Para la implementación de la solución se uso python como lenguaje y Glucose co
 - utils: contiene las funciones necesarias para ejecutar el SAT-solver Glucose.
 
 - main: contiene el cliente principal para la ejecuación de las tareas del programa.
+
+## Pruebas y resultados
+Se realizarón 10 pruebas, las cuales fueron aumentando de dificultad progresivamnete, a continuación se muestra una tabla con los valores usados y los resultados.
+
+| Nº Equipos | Horas | Días | Variables  | Clausulas     | Tiempo (s) |
+|------------|-------|------|------------|---------------|------------|
+| 4          | 4     | 6    | 168        | 5604          | 0.008594   |
+| 4          | 4     | 31   | 744        | 43620         | 0.037973   |
+| 4          | 6     | 61   | 2196       | 288138        | 0.411798   |
+| 5          | 6     | 61   | 3660       | 538430        | 0.753633   |
+| 5          | 8     | 61   | 4880       | 944180        | 1.505926   |
+| 6          | 8     | 61   | 5490       | 900435        | 1.293759   |
+| 8          | 8     | 61   | 10248      | 2057972       | 3.201675   |
+| 8          | 8     | 76   | 12768      | 2853032       | 4.806860   |
+| 10         | 8     | 76   | 20520      | 5423310       | 4.115944   |
+| 14         | 10    | 76   | 69160      | 37159122      | 29.88765   |
